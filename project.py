@@ -1,65 +1,74 @@
 import pygame
 
+
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
-NTRIALS = 15  # Number of trials
+N_BLOCKS = 4
+N_TRIALS = 15
 OUTPUT_FILE = 'reaction_times.csv'
 
-## Set up the experiment screen
-pygame.init()
-screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-pygame.mouse.set_visible(False)
-r = screen.get_rect()
-W, H = r.width, r.height
-pygame.draw.line(screen, WHITE, (W // 2, 0), (W // 2, H))
-pygame.display.flip()
-#pygame.time.wait(2000) # As long as I don't have an escape button
-reaction_times = []
 
-#for ev in pygame.event.get():
-#   if ev.type == pygame.KEYDOWN and ev.key == pygame.K_ESCAPE:
-#      pygame.quit()
+def main():
+    screen = open_window()
+    run_experiment(screen)
+    close_window()
 
-# wait till the window is closed
-done = False
-while not done:
+
+def open_window():
+    pygame.init()
+    pygame.mouse.set_visible(False)
+    return pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+
+
+def run_experiment(screen):
+    # Show general instructions
+    myfont = pygame.font.SysFont('Comic Sans MS', 30)
+    textsurface = myfont.render('General instructions', False, WHITE)
+    screen.blit(textsurface,(0,0))
+    get_input()
+
+    # Start experiment
+    for block in range(N_BLOCKS):
+        run_block(screen)
+
+
+def get_input():
+    while True:
         for event in pygame.event.get():
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                        done = True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                else:
+                    return event.key
 
 
+def run_block(screen):
+    # show instructions for the block
+    pygame.font.init()
+    myfont = pygame.font.SysFont('Comic Sans MS', 30)
+    textsurface = myfont.render('Block instructions', False, WHITE)
+    screen.blit(textsurface,(0,0))
+    pygame.display.flip()
+
+    # start block of trials
+    get_input()
+    for trial in range(N_TRIALS):
+        run_trial(screen)
 
 
+def run_trial(screen):
+    r = screen.get_rect()
+    pygame.draw.circle(screen, WHITE, (r.width // 2, r.height // 2), 10)
+    pygame.display.flip()
+    print(get_input())
 
 
-#try:
-#    for t in range(NTRIALS):
+def close_window():
+    pass
 
-#        pygame.draw.circle(screen, BLACK, (W // 2, H // 2), 4)
-#        pygame.display.flip()
-#        t0 = pygame.time.get_ticks()
 
-#        buttonpressed = False
-#        while not(buttonpressed):
-#            for ev in pygame.event.get():
-#                if ev.type == pygame.MOUSEBUTTONDOWN:
-#                    t1 = pygame.time.get_ticks()
-#                    buttonpressed = True
-#                if ev.type == pygame.KEYDOWN and ev.key == pygame.K_ESCAPE:
-#                    raise Exception()
-#        reaction_times.append(t1 - t0)
+#    reaction_times = []
 
-#        screen.fill(BLACK)
-#        pygame.display.flip()
-
-#except:
-#    pass
-
-#finally:
-#    saveresults = open(OUTPUT_FILE, 'w')
-#    saveresults.write('Trial,RT\n')
-#    for t, r in enumerate(reaction_times):
-#        saveresults.write(str(t) + ", " + str(r) + "\n")
-#    saveresults.close()
-#    pygame.quit()
+if __name__ == '__main__':
+    main()
