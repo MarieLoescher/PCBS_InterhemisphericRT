@@ -1,4 +1,5 @@
 import pygame
+import pygame.freetype
 
 
 WHITE = (255, 255, 255)
@@ -18,20 +19,28 @@ def main():
 def open_window():
     pygame.init()
     pygame.mouse.set_visible(False)
-    return pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-
+    return pygame.display.set_mode((800, 600), pygame.FULLSCREEN)
 
 def run_experiment(screen):
-    # Show general instructions
-    myfont = pygame.font.SysFont('Comic Sans MS', 30)
-    textsurface = myfont.render('General instructions', False, WHITE)
-    screen.blit(textsurface,(0,0))
-    get_input()
+    show_instructions("general_instructions.txt", screen)
 
-    # Start experiment
     for block in range(N_BLOCKS):
         run_block(screen)
 
+def show_instructions(instructions_path, screen):
+    screen.fill(BLACK)
+    myfont = pygame.freetype.SysFont('Times New Roman', 20)
+    with open(instructions_path, "r") as f:
+        text = [line for line in f]
+    # for y, line on zip(ys, text):
+    for line in f:
+        textsurface = myfont.render(line, fgcolor=WHITE)[0]
+
+    textrect = textsurface.get_rect()
+    textrect.center = (400, 300)
+    screen.blit(textsurface, textrect)
+    pygame.display.update()
+    get_input()
 
 def get_input():
     while True:
@@ -44,24 +53,18 @@ def get_input():
 
 
 def run_block(screen):
-    # show instructions for the block
-    pygame.font.init()
-    myfont = pygame.font.SysFont('Comic Sans MS', 30)
-    textsurface = myfont.render('Block instructions', False, WHITE)
-    screen.blit(textsurface,(0,0))
-    pygame.display.flip()
+    show_instructions("general_instructions.txt", screen)
 
-    # start block of trials
-    get_input()
     for trial in range(N_TRIALS):
         run_trial(screen)
 
 
 def run_trial(screen):
+    screen.fill(BLACK)
     r = screen.get_rect()
     pygame.draw.circle(screen, WHITE, (r.width // 2, r.height // 2), 10)
     pygame.display.flip()
-    print(get_input())
+    get_input()
 
 
 def close_window():
