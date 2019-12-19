@@ -21,11 +21,13 @@ def open_window():
     pygame.mouse.set_visible(False)
     return pygame.display.set_mode((800, 600), pygame.FULLSCREEN)
 
+
 def run_experiment(screen):
     show_instructions("general_instructions.txt", screen)
 
-    for block in range(N_BLOCKS):
-        run_block(screen)
+    for block_number in range(N_BLOCKS):
+        run_block(screen, block_number)
+
 
 def show_instructions(instructions_path, screen):
     screen.fill(BLACK)
@@ -33,7 +35,7 @@ def show_instructions(instructions_path, screen):
     with open(instructions_path, "r") as f:
         text = [line for line in f]
     # for y, line on zip(ys, text):
-    for line in f:
+    for line in text:
         textsurface = myfont.render(line, fgcolor=WHITE)[0]
 
     textrect = textsurface.get_rect()
@@ -41,6 +43,7 @@ def show_instructions(instructions_path, screen):
     screen.blit(textsurface, textrect)
     pygame.display.update()
     get_input()
+
 
 def get_input():
     while True:
@@ -52,8 +55,8 @@ def get_input():
                     return event.key
 
 
-def run_block(screen):
-    show_instructions("general_instructions.txt", screen)
+def run_block(screen, block_number):
+    show_instructions(f"block_{block_number}_instructions.txt", screen)
 
     for trial in range(N_TRIALS):
         run_trial(screen)
