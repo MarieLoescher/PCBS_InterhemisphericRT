@@ -3,13 +3,13 @@ import pygame.freetype
 from datetime import datetime
 
 
+SCREEN_WIDTH, SCREEN_HEIGHT = 800, 600
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
 N_BLOCKS = 4
 N_TRIALS = 15
 OUTPUT_FILE = f'reaction_times_{datetime.now().strftime("%d-%m-%YT%H-%M")}.csv' # putting a time stamp into the name of the output file to later identify it
-
 REACTION_TIMES = []
 
 
@@ -28,7 +28,7 @@ def main():
 def open_window():
     pygame.init()
     pygame.mouse.set_visible(False)
-    return pygame.display.set_mode((800, 600), pygame.FULLSCREEN)
+    return pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
 
 
 def run_experiment(screen):
@@ -41,8 +41,7 @@ def run_experiment(screen):
 def show_instructions(instructions_path, screen):
     screen.fill(BLACK)
     instructions = pygame.image.load(instructions_path)
-    instructions = pygame.transform.scale(instructions, (800, 448))
-    screen.blit(instructions, (0, 76))
+    screen.blit(instructions, (0, 75))
     pygame.display.update()
     get_input()
 
