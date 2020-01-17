@@ -7,8 +7,8 @@ SCREEN_WIDTH, SCREEN_HEIGHT = 800, 600
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
-N_BLOCKS = 4
-N_TRIALS = 15
+N_BLOCKS = 2
+N_TRIALS = 2
 OUTPUT_FILE = f'reaction_times_{datetime.now().strftime("%d-%m-%YT%H-%M")}.csv' # putting a time stamp into the name of the output file to later identify it
 REACTION_TIMES = []
 
@@ -33,9 +33,9 @@ def open_window():
 
 def run_experiment(screen):
     show_instructions("general_instructions.png", screen)
-
     for block_number in range(N_BLOCKS):
         run_block(screen, block_number)
+    show_instructions("thanks.png", screen)
 
 
 def show_instructions(instructions_path, screen):
