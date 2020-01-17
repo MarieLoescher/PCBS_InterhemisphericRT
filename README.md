@@ -1,4 +1,4 @@
-# Interhemispheric Transfer Times
+# Interhemispheric Reaction Times
 
 ## Introduction
 
