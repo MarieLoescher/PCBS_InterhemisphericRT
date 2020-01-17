@@ -1,8 +1,24 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+from glob import glob
+
+N_BLOCKS = 4
+
+# Reading the data from all output files
+files = glob('reaction_times_*.csv')
+for file in files:
+    df = pd.read_csv(file)
+
+# Extracting the relevant values (RTs) for each block of each file
+    rt_data = {}
+    for block in range(1, N_BLOCKS+1): #Because blocks start at 1, but iteration at 0
+        df_block = df.loc[df['Block'] == block]
+        rt_data[block] = df_block['RT\ms']
+
+
 
 # Calculating mean RTs
-df = pd.read_csv('reaction_times_14-01-2020T13-53.csv')
+
 
 
 
