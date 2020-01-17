@@ -17,7 +17,7 @@ def main():
     screen = open_window()
     run_experiment(screen)
     saveresults = open(OUTPUT_FILE, 'w')
-    saveresults.write('Block, Trial, RT\\ms\n')
+    saveresults.write('Block,Trial,RT\ms\n')
     for block, trials in enumerate(REACTION_TIMES):
         for trial, reaction_time in enumerate(trials):
             saveresults.write(str(block+1) + "," + str(trial+1) + "," + str(reaction_time) + "\n")
