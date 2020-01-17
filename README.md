@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The aim of this project was to create a simple experiment investigating interhemisheric transfer times (ITT). The design was based on the Poffenberger paradigm (Poffenberger, 1912, as cited by Marzi, 1999), in which ITT are inferred by the difference between the reponse time (RT) to a contralateral versus to an ipsolateral stimulus. The idea is to present a visual stimulus to only one of the two halves of the visual field, and to measure the RTs of a subject responding either with his contralateral or his ipsolateral hand.
+The aim of this project was to create a simple experiment investigating interhemisheric transfer times (ITT). The design was based on the Poffenberger paradigm (Poffenberger, 1912, as cited by Marzi, 1999), in which ITT are inferred by the difference between the reaction time (RT) to a contralateral versus to an ipsolateral stimulus. The idea is to present a visual stimulus to only one of the two halves of the visual field, and to measure the RTs of a subject responding either with his contralateral or his ipsolateral hand.
 
 There are several ways to implement this paradigm. At first, I wanted to lateralize the stimulus by presenting it either on the right or on the left of the screen. But I feared that screens might not be large enough to ensure that only one eye is seeing the stimulus. Poffenberger himself used a rotating chair to move the subjects so that the stimulus only hit the wanted part of the visual field. I finally chose to realize the paradigm by asking subjects to conceal one eye - but one could also implement it Poffenberger's way, as the stimulus is presented in the center of the screen in both cases.
 
@@ -61,11 +61,11 @@ Then, I extracted the relevant data from each file. Inside each file, I  selecte
     for block in range(1, N_BLOCKS+1):
         df_block = df.loc[df['Block'] == block]
 
-These lists were then assigned to their corresponding block number inside the dictionary `rt_data` i had created above (lines 9, 19):
+These lists were then assigned to their corresponding block number inside the dictionary `rt_data` I had created above (lines 9, 19):
 
     rt_data[block].append(df_block['RT\ms'].mean())    
 
-Thus, at this point, the structure of `rt_data` is the following: {Block number 1: [RT values subject 1], [RT values subject 2] ; Block number 2: [RT values subject 1], [RT values subject 2] ; etc.}. Finally, I computed the mean RT across subjects for each block, to end up with 4 RT means corresponding to the four tested conditions (lines 21 - 22).
+Thus, at this point, the structure of `rt_data` is the following: {Block number 1: [RT values subject 1], [RT values subject 2] ; Block number 2: [RT values subject 1], [RT values subject 2] ; etc.}. Finally, I computed the mean RT across subjects for each block, to end up with four RT means corresponding to the four tested conditions (lines 21 - 22).
 
 To plot a factorial figure, I superimposed a line plot with a scatter plot. I assigned the block numbers to their corresponding condition (ipso- or contralateral) manually (lines 27-28). This should be kept in mind if one wanted to switch the order of tested conditions or add blocks, even though I tried to make the block number modifiable (there also is another, similar instance in the experiment script, starting line 59, where I assign a key to each block).
 
